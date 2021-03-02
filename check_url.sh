@@ -3,7 +3,7 @@
 
 # 脚本开头定义变量
 init_url_status=200
-temp_file=`mktemp /tmp/check_url.XXX`
+temp_file=$(mktemp /tmp/check_url.XXX)
 
 # 帮助信息
 if [[ -z "$1" ]] || [[ "$1" == "--help" ]]; then
@@ -18,13 +18,13 @@ fi
 [[ ! -x /usr/bin/curl ]] && echo "curl: not found command" && exit 1
 
 # 访问一次URL
-curl -I $1 > $temp_file
+curl -I "$1" > "$temp_file"
 
 # 从输出中截取状态码
-url_status=`grep "HTTP/1.1" $temp_file | cut -d " " -f2`
+url_status=$(grep "HTTP/1.1" "$temp_file" | cut -d " " -f2)
 
 # 删除临时文件
-rm -f $temp_file
+rm -f "$temp_file"
 
 
 
