@@ -14,7 +14,7 @@ done
 # break
 for ((;;))
     do
-        read -p "char: " ch
+        read -r -p "char: " ch
         if [[ "$ch" == "q" ]]
             then
                 break
