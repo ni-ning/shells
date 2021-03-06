@@ -14,7 +14,7 @@ NGINX_INSTALL_DIR="/usr/local/nginx"
 NGINX_USER="www"
 NGINX_GROUP="www"
 
-check () {
+check_nginx () {
     # 判断是否已安装 nginx
 
     # 检测当前用户 要求为 root
@@ -34,10 +34,10 @@ check () {
 }
 
 
-prepare () {
+prepare_nginx () {
     # 1. 安装依赖
     # 0-stdin 1-stdout 2-stderr
-    if ! (yum install -y gcc-* pcre-devel zlib-devel 1>/etc/null); then
+    if ! (yum install -y gcc-* pcre-devel zlib-devel elinks 1>/etc/null); then
         echo "ERROR: yum install error"
         exit 1
     fi
@@ -58,7 +58,23 @@ prepare () {
 
 }
 
+# 安装
+install_nginx () {
+    # 创建管理用户
+    useradd -r -s /sbin/nologin $NGINX_USER
+    cd "$NGINX_VER"
 
-# 执行操作
-check
-prepare
+}
+
+# 测试
+test_nginx () {
+    if $NGINX_INSTALL_DIR/sbin/nginx; then
+        echo "SUCCESS: nginx start "
+        elinks http://localhost --dump
+    else
+        echo "FAIL: nginx start"
+    fi
+}
+
+# 执行函数
+check_nginx; prepare_nginx; install_nginx; test_nginx

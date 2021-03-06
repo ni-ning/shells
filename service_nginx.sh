@@ -7,37 +7,37 @@
 # killall nginx
 
 # 定义变量 - 常规操作
-nginx_install_dir=/usr/local/nginx
-nginxd=$nginx_install_dir/sbin/nginx
-pid_file=$nginx_install_dir/logs/nginx.pid
+NGINX_INSTALL_DIR="/usr/local/nginx"
+NGINX_DAEMON="$NGINX_INSTALL_DIR/sbin/nginx"
+PID_FILE="$NGINX_INSTALL_DIR/logs/nginx.pid"
 process=nginx
 
 # 导入系统提供内置函数
 if [ -f /etc/init.d/functions ]; then
     . /etc/init.d/functions
 else
-    echo "not found file /etc/init.d/functions"
-    exit
+    echo "Not found file /etc/init.d/functions"
+    exit 1
 fi
 
-if [ -f "$pid_file" ]; then
-    nginx_process_id=$(cat "$pid_file")
-    nginx_process_num=$(ps aux | grep "$nginx_process_id" | grep -v "grep" | wc -l)
+if [ -f "$PID_FILE" ]; then
+    NGXIN_PROCESS_ID=$(cat "$PID_FILE")
+    NGINX_PROCESS_NUM=$(ps aux | grep "$NGXIN_PROCESS_ID" | grep -v "grep" | wc -l)
 fi
 
 # 功能函数
 start () {
     # 存在服务的pid文件且进程服务数大于1，说明服务正在运行
-    if [ -f "$pid_file" ] && [ "$nginx_process_num" -ge 1 ]; then
-        echo "nginx running...."
+    if [ -f "$PID_FILE" ] && [ "$NGINX_PROCESS_NUM" -ge 1 ]; then
+        echo "Nginx has been running."
     else
         # 存在服务的pid文件 但是进程服务不存在，可能是断电导致的
-        if [[ -f "$pid_file" ]] && [[ $nginx_process_num -lt 1 ]]; then
+        if [[ -f "$PID_FILE" ]] && [[ $NGINX_PROCESS_NUM -lt 1 ]]; then
             # 删除进程文件
-            rm -f "$pid_file"
+            rm -f "$PID_FILE"
         fi
         # 利用工具函数 启动服务
-        echo "nginx start $(daemon "$nginxd")"
+        echo "Nginx start $(daemon "$NGINX_DAEMON") success."
     fi
 }
 
@@ -57,15 +57,26 @@ status () {
     echo "status...."
 }
 
+remove () {
+    # 关闭服务
+    stop
+
+    read -p "Are you sure to remove nginx totally? (Y/N)" inp
+    if [ "$inp" == "Y" ]; then
+        rm -rf "$NGINX_INSTALL_DIR"
+    elif [ "$inp" == "N" ]; then
+        exit 1
+    fi
+}
+
 
 # 主干逻辑
 case "$1" in
-
 "start") start ;;
 "stop") stop ;;
 "restart") restart ;;
 "reload") reload ;;
 "status") status ;;
-
+"remove") remove ;;
 *) echo "USAGE: $0 start|stop|restart|reload|status"
 esac
