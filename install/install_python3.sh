@@ -35,3 +35,5 @@ def prepare () {
     echo -e "prepare wget done"
 }
 
+
+prepare
