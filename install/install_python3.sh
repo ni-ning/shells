@@ -71,7 +71,9 @@ install () {
 
 virtual () {
     # 安装虚拟环境
-    PYTHON_DEAMON -m venv "$PYTHON_ENV"
+    . /etc/init.d/functions
+    daemon "$PYTHON_DEAMON" -m venv "$PYTHON_ENV"
+    # /usr/local/python3/bin/python3 -m venv "$PYTHON_ENV"
 }
 # prepare
 # install
