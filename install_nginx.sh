@@ -15,6 +15,7 @@ check () {
     if [ $USER != 'root' ];then
         echo "ERROR: need to be root."
         exit 1
+    fi
 
     # 检测 weget，使用者可以做个软连接
     if [ ! -x /usr/bin/wget ];then
@@ -47,3 +48,7 @@ prepare () {
     fi
 
 }
+
+# 执行操作
+check
+prepare
