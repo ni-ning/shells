@@ -77,4 +77,5 @@ test_nginx () {
 }
 
 # 执行函数
-check_nginx; prepare_nginx; install_nginx; test_nginx
+check_nginx; prepare_nginx
+# check_nginx; prepare_nginx; install_nginx; test_nginx

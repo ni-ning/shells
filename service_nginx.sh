@@ -47,6 +47,7 @@ stop () {
         if killall -s QUIT "$PROCESS_NAME"; then
             echo "Success: nginx has stopped."
             rm -f "$PID_FILE"
+            # 注意是 return 而不是 exit，exit指的是退出脚本了
             return 0
         fi
     fi
