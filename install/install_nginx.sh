@@ -97,4 +97,4 @@ remove_nginx_pkg () {
 }
 
 # 执行函数
-check_nginx; prepare_nginx; install_nginx && remove_nginx_pkg; test_nginx
+check_nginx; prepare_nginx; install_nginx; remove_nginx_pkg; test_nginx
