@@ -55,8 +55,8 @@ install () {
         if make 1> /etc/null; then
             echo "python make install..."
             if make install 1> /etc/null; then
-                # ln -s /usr/local/python3/bin/python3 /usr/bin/python38
-                # ln -s /usr/local/python3/bin/pip3 /usr/bin/pip38
+                # ln -s /usr/local/python3/bin/python3 /usr/bin/python3
+                # ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
                 echo "SUCCESS: python has installed"
             else
                 echo "ERROR: python make install fail" && exit 1
