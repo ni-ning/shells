@@ -6,7 +6,7 @@ PYTHON_PKG="${PYTHON_VER}.tgz"
 PYTHON_URL="https://www.python.org/ftp/python/3.9.2/${PYTHON_PKG}"
 
 
-def prepare () {
+prepare () {
      # 检测当前用户 要求为 root
     if [ $USER != 'root' ];then
         echo "ERROR: need to be root"
