@@ -47,7 +47,7 @@ stop () {
         if killall -s QUIT "$PROCESS_NAME"; then
             echo "Success: nginx has stopped."
             rm -f "$PID_FILE"
-            exit 0
+            return 0
         fi
     fi
 
@@ -55,9 +55,7 @@ stop () {
 }
 
 restart () {
-    stop
-    sleep 3
-    start
+    stop; sleep 1; start
 
 }
 
@@ -65,7 +63,7 @@ reload () {
     if [ -f "$PID_FILE" ] && [ "$NGINX_PROCESS_NUM" -ge 1 ]; then
         if killall -s HUP "$PROCESS_NAME"; then
             echo "Success: nginx has reloaded."
-            exit 0
+            return 0
         fi
     fi
    
