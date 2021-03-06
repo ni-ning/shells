@@ -14,7 +14,7 @@ PYTHON_DEAMON="$PYTHON_INSTALL_DIR/bin/python3"
 
 # 具体项目虚拟环境目录
 PYTHON_ENV="~/envs/project3"
-DJANGO_VER="3.0.0"
+DJANGO_VER="django==3.1.7"
 
 prepare () {
      # 检测当前用户 要求为 root
@@ -79,11 +79,12 @@ virtual () {
 
 django () {
     source "$PYTHON_ENV/bin/activate"
-    pip install django
+    pip install -i  https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com "$DJANGO_VER"
 }
 
+
 # 实际执行
-prepare; install; virtual
+prepare; install; virtual; django
 
 # 删除临时文件
 rm -rf "$PYTHON_VER"
