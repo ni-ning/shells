@@ -12,10 +12,14 @@ install () {
         systemctl status redis
     else
         # https://www.digitalocean.com/community/tutorials/how-to-install-secure-redis-centos-7
-        yum install -y redis
-        systemctl start redis.service
-        systemctl enable redis.service
-        redis-cli ping
+        if yum install -y redis 1> /etc/null; then
+            systemctl start redis.service 1>/etc/null
+            systemctl enable redis.service 1>/etc/null
+            redis-cli ping
+            echo "SUCCESS: redis install succeed"
+        else
+            echo "ERROR: redis install fail"
+        fi
     fi
 }
 
