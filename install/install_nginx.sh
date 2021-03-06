@@ -93,8 +93,12 @@ test_nginx () {
 
 remove_nginx_pkg () {
     # 删除下载文件
-    rm -rf "${NGINX_VER}"
-    rm -rf "${NGINX_PKG}"
+    if rm -rf "$NGINX_VER"; then
+        echo "remove $NGINX_VER success"
+    else
+        echo "remove $NGINX_VER fail"
+    fi
+    if rm -rf "$NGINX_PKG"
 
 }
 
