@@ -30,7 +30,7 @@ check () {
     fi
     # 简写
     # [ ! -x /usr/bin/wget] && echo "not found command /usr/bin/wget" && exit 1
-    echo "[1] check done."
+    echo -e "\033[31m[1]\033[0m check done."
 }
 
 
@@ -41,12 +41,12 @@ prepare () {
         echo "ERROR: yum install error"
         exit 1
     fi
-    echo "[2] prepare dependency done."
+    echo -e "\033[31m[2]\033[0m prepare dependency done."
     
     # 2. 下载源码包 
     if wget $NGINX_URL 1>/etc/null; then
-        tar xf NGINX_PKG
-        if [! -d NGINX_VER]; then
+        tar xf "$NGINX_PKG"
+        if [! -d "$NGINX_VER" ]; then
             echo "ERROR: not found $NGINX_VER"
             exit 1
         fi
@@ -54,7 +54,7 @@ prepare () {
         echo "ERROR: wegt file $NGINX_PKG error"
         exit
     fi
-    echo "[3] prepare weget done."
+    echo -e "\033[31m[3]\033[0m prepare weget done."
 
 }
 
