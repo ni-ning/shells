@@ -57,3 +57,5 @@ install () {
 }
 
 # prepare
+
+install
