@@ -98,7 +98,8 @@ remove_nginx_pkg () {
     else
         echo "remove $NGINX_VER fail"
     fi
-    if rm -rf "$NGINX_PKG"
+
+    rm -rf "$NGINX_PKG"
 
 }
 
