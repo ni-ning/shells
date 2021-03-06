@@ -63,6 +63,5 @@ install () {
     fi
 }
 
-# prepare
-
+prepare
 install
