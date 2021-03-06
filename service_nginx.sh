@@ -10,7 +10,7 @@
 NGINX_INSTALL_DIR="/usr/local/nginx"
 NGINX_DAEMON="$NGINX_INSTALL_DIR/sbin/nginx"
 PID_FILE="$NGINX_INSTALL_DIR/logs/nginx.pid"
-process=nginx
+PROCESS_NAME="nginx"
 
 # 导入系统提供内置函数
 if [ -f /etc/init.d/functions ]; then
@@ -38,11 +38,20 @@ start () {
         fi
         # 利用工具函数 启动服务
         echo "Nginx start $(daemon "$NGINX_DAEMON") success."
+        # action "Nginx start success" $(daemon "$NGINX_DAEMON")
     fi
 }
 
 stop () {
-    echo "stop..."
+    if [ -f "$PID_FILE" ] && [ "$NGINX_PROCESS_NUM" -ge 1 ]; then
+        if killall -s QUIT "$PROCESS_NAME"; then
+            echo "Nginx stop success."
+            rm -f "$PID_FILE"
+            exit 0
+        fi
+    fi
+
+    echo "Not found nginx" && exit 1
 }
 
 restart () {
