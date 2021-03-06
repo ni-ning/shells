@@ -46,15 +46,15 @@ prepare_nginx () {
     # 2. 下载源码包 
     if wget $NGINX_URL 1>/etc/null; then
         tar xf "$NGINX_PKG"
-        if [! -d "$NGINX_VER" ]; then
+        if [ ! -d "$NGINX_VER" ]; then
             echo "ERROR: not found $NGINX_VER"
             exit 1
         fi
     else
-        echo "ERROR: wegt file $NGINX_PKG error"
+        echo "ERROR: wget file $NGINX_PKG error"
         exit
     fi
-    echo -e "\033[31m[3]\033[0m prepare weget done."
+    echo -e "\033[31m[3]\033[0m prepare wget done."
 
 }
 
