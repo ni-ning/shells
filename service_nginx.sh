@@ -55,7 +55,9 @@ stop () {
 }
 
 restart () {
-    stop; sleep 1; start
+    stop
+    sleep 3
+    start
 
 }
 
