@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Description: nginx 启动 关闭 重启 重载 查看状态 删除服务
 
 # 背景命令介绍
 # lsof -i :80

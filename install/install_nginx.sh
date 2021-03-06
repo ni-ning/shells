@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Description: Nginx 安装初始化服务
+# Description: Nginx 安装初始化
 
 # 安装用户
 # 安装前准备 依赖包 源码包获得
