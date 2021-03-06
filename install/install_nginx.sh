@@ -93,7 +93,7 @@ test_nginx () {
 
 remove_nginx_pkg () {
     # 删除下载文件
-    rm -rf "${NGINX_VER}"*
+    rm -rf "${NGINX_VER}*"
 }
 
 # 执行函数
