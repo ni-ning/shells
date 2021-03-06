@@ -29,7 +29,7 @@ fi
 start () {
     # 存在服务的pid文件且进程服务数大于1，说明服务正在运行
     if [ -f "$PID_FILE" ] && [ "$NGINX_PROCESS_NUM" -ge 1 ]; then
-        echo "Nginx has been running."
+        echo "Info: nginx has been running."
     else
         # 存在服务的pid文件 但是进程服务不存在，可能是断电导致的
         if [[ -f "$PID_FILE" ]] && [[ $NGINX_PROCESS_NUM -lt 1 ]]; then
@@ -37,7 +37,7 @@ start () {
             rm -f "$PID_FILE"
         fi
         # 利用工具函数 启动服务
-        echo "Nginx start $(daemon "$NGINX_DAEMON") success."
+        echo "Success: nginx start $(daemon "$NGINX_DAEMON")"
         # action "Nginx start success" $(daemon "$NGINX_DAEMON")
     fi
 }
@@ -45,13 +45,13 @@ start () {
 stop () {
     if [ -f "$PID_FILE" ] && [ "$NGINX_PROCESS_NUM" -ge 1 ]; then
         if killall -s QUIT "$PROCESS_NAME"; then
-            echo "Nginx stop success."
+            echo "Success: nginx has stopped."
             rm -f "$PID_FILE"
             exit 0
         fi
     fi
 
-    echo "Not found nginx" && exit 1
+    echo "ERROR: not found nginx" && exit 1
 }
 
 restart () {
