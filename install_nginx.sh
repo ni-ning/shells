@@ -79,8 +79,6 @@ install_nginx () {
     else
         echo "ERROR: nginx configure fail" && exit 1
     fi
-
-
 }
 
 # 测试
@@ -93,6 +91,10 @@ test_nginx () {
     fi
 }
 
+remove_nginx_pkg () {
+    # 删除下载文件
+    rm -rf "$NGINX_VER"*
+}
+
 # 执行函数
-install_nginx; test_nginx
-# check_nginx; prepare_nginx; install_nginx; test_nginx
+check_nginx; prepare_nginx; install_nginx && remove_nginx_pkg; test_nginx
