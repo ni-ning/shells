@@ -55,15 +55,27 @@ stop () {
 }
 
 restart () {
-    echo "restart..."
+    stop; sleep 1; start
+
 }
 
 reload () {
-    echo "reload..."
+    if [ -f "$PID_FILE" ] && [ "$NGINX_PROCESS_NUM" -ge 1 ]; then
+        if killall -s HUP "$PROCESS_NAME"; then
+            echo "Success: nginx has reloaded."
+            exit 0
+        fi
+    fi
+   
+    echo "ERROR: not found nginx" && exit 1
 }
 
 status () {
-    echo "status...."
+    if [ -f "$PID_FILE" ] && [ "$NGINX_PROCESS_NUM" -ge 1 ]; then
+        echo "Success: nginx is running."
+    else
+        echo "ERROR: nginx is not running."
+    fi
 }
 
 remove () {
