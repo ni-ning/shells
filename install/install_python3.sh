@@ -5,10 +5,12 @@
 # PYTHON_PKG="${PYTHON_VER}.tgz"
 # PYTHON_URL="https://www.python.org/ftp/python/3.9.2/${PYTHON_PKG}"
 
+# 版本版本
 PYTHON_VER="Python-3.8.6"
 PYTHON_PKG="${PYTHON_VER}.tgz"
 PYTHON_URL="https://static-global.121learn.com/Python-3.8.6.tgz"
 
+# 安装路径
 PYTHON_INSTALL_DIR="/usr/local/python3"
 PYTHON_DEAMON="$PYTHON_INSTALL_DIR/bin/python3"
 
