@@ -19,7 +19,7 @@ check_nginx () {
 
     # 检测当前用户 要求为 root
     if [ $USER != 'root' ];then
-        echo "ERROR: need to be root."
+        echo "ERROR: need to be root"
         exit 1
     fi
 
@@ -30,7 +30,7 @@ check_nginx () {
     fi
     # 简写
     # [ ! -x /usr/bin/wget] && echo "not found command /usr/bin/wget" && exit 1
-    echo -e "\033[31m[1]\033[0m check done."
+    echo -e "\033[31m[1]\033[0m check done"
 }
 
 
@@ -41,7 +41,7 @@ prepare_nginx () {
         echo "ERROR: yum install error"
         exit 1
     fi
-    echo -e "\033[31m[2]\033[0m prepare dependency done."
+    echo -e "\033[31m[2]\033[0m prepare dependency done"
     
     # 2. 下载源码包 
     if wget $NGINX_URL 1>/etc/null; then
@@ -54,28 +54,45 @@ prepare_nginx () {
         echo "ERROR: wget file $NGINX_PKG error"
         exit
     fi
-    echo -e "\033[31m[3]\033[0m prepare wget done."
+    echo -e "\033[31m[3]\033[0m prepare wget done"
 
 }
 
 # 安装
 install_nginx () {
     # 创建管理用户
-    useradd -r -s /sbin/nologin $NGINX_USER
+    useradd -r -s /sbin/nologin "$NGINX_USER"
     cd "$NGINX_VER"
+    echo "nginx configure..."
+    if ./configure --prefix="$NGINX_INSTALL_DIR" --user="$NGINX_USER" --group="$NGXIN_GROUP" 1> /etc/null; then
+        echo "nginx make..."
+        if make 1> /etc/null; then
+            echo "nginx make install..."
+            if make install 1> /etc/null; then
+                echo "SUCCESS: nginx has installed"
+            else
+                echo "ERROR: nginx make install fail" && exit 1
+            fi
+        else
+            echo "ERROR: nginx make fail" && exit 1
+        fi
+    else
+        echo "ERROR: nginx configure fail" && exit 1
+    fi
+
 
 }
 
 # 测试
 test_nginx () {
     if $NGINX_INSTALL_DIR/sbin/nginx; then
-        echo "SUCCESS: nginx start "
+        echo "SUCCESS: nginx start"
         elinks http://localhost --dump
     else
-        echo "FAIL: nginx start"
+        echo "ERROR: nginx start fail"
     fi
 }
 
 # 执行函数
-check_nginx; prepare_nginx
+install_nginx; test_nginx
 # check_nginx; prepare_nginx; install_nginx; test_nginx
