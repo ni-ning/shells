@@ -8,7 +8,7 @@ install () {
         exit 1
     fi
 
-    if which redis-cli; then
+    if which redis-cli &> /etc/null; then
         systemctl status redis
     else
         # https://www.digitalocean.com/community/tutorials/how-to-install-secure-redis-centos-7
