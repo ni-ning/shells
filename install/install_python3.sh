@@ -17,7 +17,7 @@ prepare () {
     fi
 
         # 1. 安装依赖
-    # 0-stdin 1-stdout 2-stderr
+    # 0-stdin 1-stdout 2-stderr 
     if ! (yum install -y gcc-* openssl-* libffi-devel sqlite-devel 1>/etc/null); then
         echo "ERROR: yum install error"
         exit 1
@@ -42,7 +42,9 @@ prepare () {
 install () {
     cd "$PYTHON_VER"
     echo "pyhton configure..."
-    if ./configure --enable-optimizations --prefix=/usr/local/python3 1>/etc/null; then
+    
+    # 在低版本的gcc版本中带 --enable-optimizations 会出现 Could not import runpy module 错误
+    if ./configure --with-openssl=/usr/bin/openssl --prefix=/usr/local/python3 1>/etc/null; then
         echo "python make..."
         if make 1> /etc/null; then
             echo "python make install..."
