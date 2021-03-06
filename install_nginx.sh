@@ -6,11 +6,17 @@
 # 安装
 # 启动 测试
 
-NGINX_VER=nginx-1.18.0
-NGINX_TAR_GZ=${NGINX_VER}.tar.gz
-NGINX_URL=http://nginx.org/download/${NGINX_TAR_GZ}
+NGINX_VER="nginx-1.18.0"
+NGINX_PKG="${NGINX_VER}.tar.gz"
+NGINX_URL="http://nginx.org/download/${NGINX_PKG}"
+
+NGINX_INSTALL_DIR="/usr/local/nginx"
+NGINX_USER="www"
+NGINX_GROUP="www"
 
 check () {
+    # 判断是否已安装 nginx
+
     # 检测当前用户 要求为 root
     if [ $USER != 'root' ];then
         echo "ERROR: need to be root."
@@ -24,6 +30,7 @@ check () {
     fi
     # 简写
     # [ ! -x /usr/bin/wget] && echo "not found command /usr/bin/wget" && exit 1
+    echo "[1] check done."
 }
 
 
@@ -34,20 +41,23 @@ prepare () {
         echo "ERROR: yum install error"
         exit 1
     fi
-
+    echo "[2] prepare dependency done."
+    
     # 2. 下载源码包 
     if wget $NGINX_URL 1>/etc/null; then
-        tar xf NGINX_TAR_GZ
+        tar xf NGINX_PKG
         if [! -d NGINX_VER]; then
             echo "ERROR: not found $NGINX_VER"
             exit 1
         fi
     else
-        echo "ERROR: wegt file $NGINX_TAR_GZ error"
+        echo "ERROR: wegt file $NGINX_PKG error"
         exit
     fi
+    echo "[3] prepare weget done."
 
 }
+
 
 # 执行操作
 check
