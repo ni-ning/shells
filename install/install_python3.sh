@@ -37,6 +37,7 @@ prepare () {
 
 
 install () {
+    cd "$PYTHON_VER"
     if ./configure --enable-optimizations --prefix=/usr/local/python3 1>/etc/null; then
         echo "python make..."
         if make 1> /etc/null; then
