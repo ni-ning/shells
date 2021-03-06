@@ -13,7 +13,7 @@ PYTHON_INSTALL_DIR="/usr/local/python3"
 PYTHON_DEAMON="$PYTHON_INSTALL_DIR/bin/python3"
 
 # 具体项目虚拟环境目录
-PYTHON_ENV="~/envs/project3"
+PYTHON_ENV="/opt/envs/project3"
 DJANGO_VER="django==3.1.7"
 
 prepare () {
