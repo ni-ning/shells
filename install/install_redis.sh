@@ -11,6 +11,7 @@ install () {
     if which redis-cli &> /etc/null; then
         systemctl status redis
     else
+        echo "redis install..."
         # https://www.digitalocean.com/community/tutorials/how-to-install-secure-redis-centos-7
         if yum install -y redis &> /etc/null; then
             systemctl start redis.service &>/etc/null
