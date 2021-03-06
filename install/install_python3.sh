@@ -9,6 +9,12 @@ PYTHON_VER="Python-3.8.6"
 PYTHON_PKG="${PYTHON_VER}.tgz"
 PYTHON_URL="https://static-global.121learn.com/Python-3.8.6.tgz"
 
+PYTHON_INSTALL_DIR="/usr/local/python3"
+PYTHON_DEAMON="$PYTHON_INSTALL_DIR/bin/python3"
+
+# 具体项目虚拟环境目录
+PYTHON_ENV="~/envs/project3"
+
 prepare () {
      # 检测当前用户 要求为 root
     if [ $USER != 'root' ];then
@@ -44,13 +50,13 @@ install () {
     echo "pyhton configure..."
     
     # 在低版本的gcc版本中带 --enable-optimizations 会出现 Could not import runpy module 错误
-    if ./configure --with-openssl=/usr/bin/openssl --prefix=/usr/local/python3 1>/etc/null; then
+    if ./configure --with-openssl=/usr/bin/openssl --prefix="$PYTHON_INSTALL_DIR" 1>/etc/null; then
         echo "python make..."
         if make 1> /etc/null; then
             echo "python make install..."
             if make install 1> /etc/null; then
-                # ln -s /usr/local/python3/bin/python3 /usr/bin/python3
-                # ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
+                # ln -s /usr/local/python3/bin/python3 /usr/bin/python38
+                # ln -s /usr/local/python3/bin/pip3 /usr/bin/pip38
                 echo "SUCCESS: python has installed"
             else
                 echo "ERROR: python make install fail" && exit 1
@@ -63,5 +69,11 @@ install () {
     fi
 }
 
-prepare
-install
+virtual () {
+    # 安装虚拟环境
+    PYTHON_DEAMON -m venv "$PYTHON_ENV"
+}
+# prepare
+# install
+
+virtual
