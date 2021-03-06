@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Description: virtualenv python django
+# Description: python virtualenv django
 
 # PYTHON_VER="Python-3.9.2"
 # PYTHON_PKG="${PYTHON_VER}.tgz"
@@ -14,6 +14,7 @@ PYTHON_DEAMON="$PYTHON_INSTALL_DIR/bin/python3"
 
 # 具体项目虚拟环境目录
 PYTHON_ENV="~/envs/project3"
+DJANGO_VER="3.0.0"
 
 prepare () {
      # 检测当前用户 要求为 root
@@ -50,7 +51,7 @@ install () {
     echo "pyhton configure..."
     
     # 在低版本的gcc版本中带 --enable-optimizations 会出现 Could not import runpy module 错误
-    if ./configure --with-openssl=/usr/bin/openssl --prefix="$PYTHON_INSTALL_DIR" 1>/etc/null; then
+    if ./configure --with-ssl --prefix="$PYTHON_INSTALL_DIR" 1>/etc/null; then
         echo "python make..."
         if make 1> /etc/null; then
             echo "python make install..."
@@ -76,5 +77,14 @@ virtual () {
     # /usr/local/python3/bin/python3 -m venv "$PYTHON_ENV"
 }
 
+django () {
+    source "$PYTHON_ENV/bin/activate"
+    pip install django
+}
+
 # 实际执行
 prepare; install; virtual
+
+# 删除临时文件
+rm -rf "$PYTHON_VER"
+rm -rf "$PYTHON_PKG"
