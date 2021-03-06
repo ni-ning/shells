@@ -75,7 +75,6 @@ virtual () {
     daemon "$PYTHON_DEAMON" -m venv "$PYTHON_ENV"
     # /usr/local/python3/bin/python3 -m venv "$PYTHON_ENV"
 }
-# prepare
-# install
 
-virtual
+# 实际执行
+prepare; install; virtual
