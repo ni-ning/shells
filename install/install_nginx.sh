@@ -64,7 +64,8 @@ install_nginx () {
     useradd -r -s /sbin/nologin "$NGINX_USER"
     cd "$NGINX_VER"
     echo "nginx configure..."
-    if ./configure --prefix="$NGINX_INSTALL_DIR" --user="$NGINX_USER" --group="$NGXIN_GROUP" 1> /etc/null; then
+    # --with-http_stub_status_module --with-http_ssl_modul
+    if ./configure --prefix="$NGINX_INSTALL_DIR" --user="$NGINX_USER" --group="$NGXIN_GROUP" --with-http_stub_status_module --with-http_ssl_modul 1> /etc/null; then
         echo "nginx make..."
         if make 1> /etc/null; then
             echo "nginx make install..."
