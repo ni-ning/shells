@@ -37,7 +37,7 @@ check_nginx () {
 prepare_nginx () {
     # 1. 安装依赖
     # 0-stdin 1-stdout 2-stderr
-    if ! (yum install -y gcc-* pcre-devel zlib-devel elinks 1>/etc/null); then
+    if ! (yum install -y gcc-* pcre-devel zlib-devel openssl-* elinks 1>/etc/null); then
         echo "ERROR: yum install error"
         exit 1
     fi
@@ -64,8 +64,8 @@ install_nginx () {
     useradd -r -s /sbin/nologin "$NGINX_USER"
     cd "$NGINX_VER"
     echo "nginx configure..."
-    # --with-http_stub_status_module --with-http_ssl_modul
-    if ./configure --prefix="$NGINX_INSTALL_DIR" --user="$NGINX_USER" --group="$NGXIN_GROUP" --with-http_stub_status_module --with-http_ssl_modul 1> /etc/null; then
+    # https 需要 --with-http_stub_status_module --with-http_ssl_module
+    if ./configure --prefix="$NGINX_INSTALL_DIR" --user="$NGINX_USER" --group="$NGXIN_GROUP" --with-http_stub_status_module --with-http_ssl_module 1> /etc/null; then
         echo "nginx make..."
         if make 1> /etc/null; then
             echo "nginx make install..."
