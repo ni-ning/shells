@@ -82,7 +82,7 @@ status () {
 
 remove () {
     # 关闭服务
-    stop
+    # stop
 
     read -p "Are you sure to remove nginx totally? (Y/N)" inp
     if [ "$inp" == "Y" ]; then
