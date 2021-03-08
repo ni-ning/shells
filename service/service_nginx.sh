@@ -22,8 +22,8 @@ else
 fi
 
 if [ -f "$PID_FILE" ]; then
-    NGXIN_PROCESS_ID=$(cat "$PID_FILE")
-    NGINX_PROCESS_NUM=$(ps aux | grep "$NGXIN_PROCESS_ID" | grep -v "grep" | wc -l)
+    NGINX_PROCESS_ID=$(cat "$PID_FILE")
+    NGINX_PROCESS_NUM=$(ps aux | grep "NGINX_PROCESS_ID" | grep -v "grep" | wc -l)
 fi
 
 # 功能函数

@@ -3,7 +3,7 @@
 install () {
 
     # 检测当前用户 要求为 root
-    if [ $USER != 'root' ];then
+    if [ "$USER" != 'root' ];then
         echo "ERROR: need to be root"
         exit 1
     fi

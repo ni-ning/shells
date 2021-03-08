@@ -18,12 +18,12 @@ check_nginx () {
     # 判断是否已安装 nginx
 
     # 检测当前用户 要求为 root
-    if [ $USER != 'root' ];then
+    if [ "$USER" != 'root' ];then
         echo "ERROR: need to be root"
         exit 1
     fi
 
-    # 检测 weget，使用者可以做个软连接
+    # 检测 wget，使用者可以做个软连接
     if [ ! -x /usr/bin/wget ];then
         echo "ERROR: not found command /usr/bin/wget"
         exit 1
@@ -62,10 +62,10 @@ prepare_nginx () {
 install_nginx () {
     # 创建管理用户
     useradd -r -s /sbin/nologin "$NGINX_USER"
-    cd "$NGINX_VER"
+    cd "$NGINX_VER" || (echo "ERROR: not found $NGINX_VER" && exit 1)
     echo "nginx configure..."
     # https 需要 --with-http_stub_status_module --with-http_ssl_module
-    if ./configure --prefix="$NGINX_INSTALL_DIR" --user="$NGINX_USER" --group="$NGXIN_GROUP" --with-http_stub_status_module --with-http_ssl_module 1> /etc/null; then
+    if ./configure --prefix="$NGINX_INSTALL_DIR" --user="$NGINX_USER" --group="$NGINX_GROUP" --with-http_stub_status_module --with-http_ssl_module 1> /etc/null; then
         echo "nginx make..."
         if make 1> /etc/null; then
             echo "nginx make install..."

@@ -12,15 +12,15 @@ PYTHON_URL="https://static-global.121learn.com/Python-3.8.6.tgz"
 
 # 安装路径
 PYTHON_INSTALL_DIR="/usr/local/python3"
-PYTHON_DEAMON="$PYTHON_INSTALL_DIR/bin/python3"
+PYTHON_DAEMON="$PYTHON_INSTALL_DIR/bin/python3"
 
 # 具体项目虚拟环境目录
-PYTHON_ENV="/opt/envs/project3"
+PYTHON_ENV="/opt/env/project3"
 DJANGO_VER="django==3.1.7"
 
 prepare () {
      # 检测当前用户 要求为 root
-    if [ $USER != 'root' ];then
+    if [ "$USER" != 'root' ];then
         echo "ERROR: need to be root"
         exit 1
     fi
@@ -49,8 +49,8 @@ prepare () {
 
 
 install () {
-    cd "$PYTHON_VER"
-    echo "pyhton configure..."
+    cd "$PYTHON_VER" || (echo "ERROR: not found $PYTHON_VER" && exit 1)
+    echo "python configure..."
     
     # 在低版本的gcc版本中带 --enable-optimizations 会出现 Could not import runpy module 错误
     if ./configure --with-ssl --prefix="$PYTHON_INSTALL_DIR" 1>/etc/null; then
@@ -65,7 +65,7 @@ install () {
                 echo "ERROR: python make install fail" && exit 1
             fi
         else
-            echo "ERROR: pyhton make fail" && exit 1
+            echo "ERROR: python make fail" && exit 1
         fi
     else
         echo "ERROR: python configure fail" && exit 1
@@ -75,12 +75,15 @@ install () {
 virtual () {
     # 安装虚拟环境
     . /etc/init.d/functions
-    daemon "$PYTHON_DEAMON" -m venv "$PYTHON_ENV"
+    daemon "$PYTHON_DAEMON" -m venv "$PYTHON_ENV"
     # /usr/local/python3/bin/python3 -m venv "$PYTHON_ENV"
 }
 
 django () {
-    source "$PYTHON_ENV/bin/activate"
+
+    # source 内尽量不包含变量
+    # source "${PYTHON_ENV/bin/activate}"
+    source "/opt/env/project3/bin/activate"
     pip install -i  https://pypi.doubanio.com/simple/  --trusted-host pypi.doubanio.com "$DJANGO_VER"
 }
 
